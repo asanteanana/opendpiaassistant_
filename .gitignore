@@ -74,3 +74,6 @@ dmypy.json
 *.tmp
 temp/
 tmp/
+.vercel
+node_modules/
+.next/
