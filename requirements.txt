@@ -1,0 +1,41 @@
+# Open DPIA Assistant - Backend Requirements
+
+# Web Framework
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+
+# Database
+sqlalchemy==2.0.36
+alembic==1.14.0
+
+# Data Validation
+pydantic==2.10.0
+pydantic-settings==2.6.0
+
+# CORS
+python-multipart==0.0.12
+
+# PDF Generation
+reportlab==4.2.5
+# Alternative: weasyprint==62.3
+
+# Date/Time
+python-dateutil==2.9.0
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# Testing
+pytest==8.3.0
+pytest-asyncio==0.24.0
+httpx==0.28.0
+
+# Code Quality
+black==24.10.0
+flake8==7.1.0
+mypy==1.13.0
+
+# Optional: Additional PDF libraries
+# weasyprint==62.3
+# xhtml2pdf==0.2.16
+
