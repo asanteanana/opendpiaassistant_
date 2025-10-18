@@ -1,17 +1,12 @@
 /**
  * Helper utility functions
  */
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import { format } from 'date-fns';
 import type { RiskLevel } from './types';
+import { cn } from '@/lib/utils';
 
-/**
- * Merge Tailwind classes
- */
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+// Re-export cn function for convenience
+export { cn };
 
 /**
  * Format date

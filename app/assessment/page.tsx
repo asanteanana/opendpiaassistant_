@@ -4,7 +4,7 @@
  */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Save, Check, Loader2, Home } from 'lucide-react';
@@ -15,10 +15,10 @@ import { QuestionCard } from '@/components/QuestionCard';
 import { RiskIndicator } from '@/components/RiskBadge';
 import { calculateProgress } from '@/utils/helpers';
 
-export default function AssessmentPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const assessmentId = searchParams?.get('id');
+function AssessmentContent() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const assessmentId = searchParams.get('id');
 
     const [assessment, setAssessment] = useState<Assessment | null>(null);
     const [categories, setCategories] = useState<QuestionCategory[]>([]);
@@ -130,7 +130,7 @@ export default function AssessmentPage() {
                 <div className="text-center">
                     <p className="text-gray-600 dark:text-gray-400">Assessment not found</p>
                     <Link
-                        href="/"
+                        href="/assessments"
                         className="mt-4 inline-block text-blue-600 hover:underline dark:text-blue-400"
                     >
                         Return to Dashboard
@@ -148,7 +148,7 @@ export default function AssessmentPage() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <Link
-                                href="/"
+                                href="/assessments"
                                 className="rounded-lg p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
                             >
                                 <Home className="h-5 w-5" />
@@ -337,6 +337,18 @@ export default function AssessmentPage() {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function AssessmentPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex min-h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            </div>
+        }>
+            <AssessmentContent />
+        </Suspense>
     );
 }
 

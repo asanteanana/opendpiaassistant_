@@ -1,314 +1,362 @@
 /**
- * DPIA Assessments Dashboard - with Nim styling
+ * Dashboard Page
+ * Lists all DPIA assessments with search and filters
  */
 'use client';
 
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Plus, Search, FileText, Calendar, Loader2 } from 'lucide-react';
+import { Plus, Search, Filter, Loader2, FileText, Calendar } from 'lucide-react';
 import Link from 'next/link';
-import { Spotlight } from '@/components/ui/spotlight';
-import { Magnetic } from '@/components/ui/magnetic';
+import { assessmentApi } from '@/utils/api';
+import type { Assessment } from '@/utils/types';
+import { RiskBadge } from '@/components/RiskBadge';
+import { formatDate, formatStatus, getStatusColor } from '@/utils/helpers';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+export default function DashboardPage() {
+    const [assessments, setAssessments] = useState<Assessment[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterStatus, setFilterStatus] = useState<string>('');
+    const [filterRisk, setFilterRisk] = useState<string>('');
+    const [showNewModal, setShowNewModal] = useState(false);
 
-const VARIANTS_CONTAINER = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
+    useEffect(() => {
+        loadAssessments();
+    }, [filterStatus, filterRisk]);
 
-const VARIANTS_SECTION = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
-};
+    const loadAssessments = async () => {
+        try {
+            setLoading(true);
+            const response = await assessmentApi.list({
+                status: filterStatus || undefined,
+                risk_level: filterRisk || undefined,
+            });
+            setAssessments(response.data);
+        } catch (error) {
+            console.error('Failed to load assessments:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-const TRANSITION_SECTION = {
-  duration: 0.3,
-};
+    const filteredAssessments = assessments.filter((assessment) =>
+        assessment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        assessment.organization.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-type Assessment = {
-  id: string;
-  title: string;
-  organization: string;
-  status: string;
-  overall_risk_level?: string;
-  overall_risk_score: number;
-  created_at: string;
-  response_count?: number;
-};
+    const stats = {
+        total: assessments.length,
+        draft: assessments.filter((a) => a.status === 'draft').length,
+        inProgress: assessments.filter((a) => a.status === 'in_progress').length,
+        completed: assessments.filter((a) => a.status === 'completed').length,
+        highRisk: assessments.filter(
+            (a) => a.overall_risk_level === 'high' || a.overall_risk_level === 'critical'
+        ).length,
+    };
 
-export default function AssessmentsPage() {
-  const [assessments, setAssessments] = useState<Assessment[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showNewModal, setShowNewModal] = useState(false);
+    return (
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+            {/* Header */}
+            <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                                DPIA Assistant
+                            </h1>
+                            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                Manage your Data Protection Impact Assessments
+                            </p>
+                        </div>
+                        <motion.button
+                            onClick={() => setShowNewModal(true)}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
+                        >
+                            <Plus className="h-4 w-4" />
+                            New Assessment
+                        </motion.button>
+                    </div>
+                </div>
+            </header>
 
-  useEffect(() => {
-    loadAssessments();
-  }, []);
+            <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                {/* Stats */}
+                <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                    <StatCard label="Total" value={stats.total} />
+                    <StatCard label="Draft" value={stats.draft} />
+                    <StatCard label="In Progress" value={stats.inProgress} />
+                    <StatCard label="Completed" value={stats.completed} />
+                    <StatCard label="High Risk" value={stats.highRisk} danger />
+                </div>
 
-  const loadAssessments = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/assessments`);
-      const data = await response.json();
-      setAssessments(data);
-    } catch (error) {
-      console.error('Failed to load assessments:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+                {/* Search and Filters */}
+                <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search assessments..."
+                            className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                        />
+                    </div>
+                    <div className="flex gap-2">
+                        <select
+                            value={filterStatus}
+                            onChange={(e) => setFilterStatus(e.target.value)}
+                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                        >
+                            <option value="">All Status</option>
+                            <option value="draft">Draft</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <select
+                            value={filterRisk}
+                            onChange={(e) => setFilterRisk(e.target.value)}
+                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                        >
+                            <option value="">All Risk Levels</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
 
-  const stats = {
-    total: assessments.length,
-    draft: assessments.filter((a) => a.status === 'draft').length,
-    inProgress: assessments.filter((a) => a.status === 'in_progress').length,
-    completed: assessments.filter((a) => a.status === 'completed').length,
-    highRisk: assessments.filter(
-      (a) => a.overall_risk_level === 'high' || a.overall_risk_level === 'critical'
-    ).length,
-  };
+                {/* Assessment Grid */}
+                {loading ? (
+                    <div className="flex h-64 items-center justify-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                    </div>
+                ) : filteredAssessments.length === 0 ? (
+                    <EmptyState onCreateNew={() => setShowNewModal(true)} />
+                ) : (
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {filteredAssessments.map((assessment, index) => (
+                            <AssessmentCard key={assessment.id} assessment={assessment} index={index} />
+                        ))}
+                    </div>
+                )}
+            </main>
 
-  return (
-    <motion.main
-      className="space-y-24"
-      variants={VARIANTS_CONTAINER}
-      initial="hidden"
-      animate="visible"
-    >
-      {/* Hero Section */}
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
-        <div className="flex items-center justify-between">
-          <div className="flex-1">
-            <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
-              DPIA Assistant
-            </h1>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-              Conduct Data Protection Impact Assessments with confidence. 
-              Streamline GDPR compliance with intelligent risk analysis.
-            </p>
-          </div>
-          <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>
-            <button
-              onClick={() => setShowNewModal(true)}
-              className="group relative inline-flex shrink-0 items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            {/* New Assessment Modal */}
+            {showNewModal && (
+                <NewAssessmentModal
+                    onClose={() => setShowNewModal(false)}
+                    onCreated={loadAssessments}
+                />
+            )}
+        </div>
+    );
+}
+
+function StatCard({
+    label,
+    value,
+    danger = false,
+}: {
+    label: string;
+    value: number;
+    danger?: boolean;
+}) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
+        >
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{label}</p>
+            <p
+                className={`mt-2 text-3xl font-bold ${danger ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}
             >
-              <Plus className="h-4 w-4" />
-              New Assessment
-            </button>
-          </Magnetic>
-        </div>
-      </motion.section>
-
-      {/* Stats */}
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
-        <h3 className="mb-5 text-lg font-medium">Overview</h3>
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-5">
-          <StatCard label="Total" value={stats.total} />
-          <StatCard label="Draft" value={stats.draft} />
-          <StatCard label="In Progress" value={stats.inProgress} />
-          <StatCard label="Completed" value={stats.completed} />
-          <StatCard label="High Risk" value={stats.highRisk} danger />
-        </div>
-      </motion.section>
-
-      {/* Assessments List */}
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
-        <h3 className="mb-5 text-lg font-medium">Your Assessments</h3>
-        
-        {loading ? (
-          <div className="flex h-64 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-zinc-600" />
-          </div>
-        ) : assessments.length === 0 ? (
-          <EmptyState onCreateNew={() => setShowNewModal(true)} />
-        ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {assessments.map((assessment, index) => (
-              <AssessmentCard key={assessment.id} assessment={assessment} index={index} />
-            ))}
-          </div>
-        )}
-      </motion.section>
-
-      {/* New Assessment Modal */}
-      {showNewModal && (
-        <NewAssessmentModal onClose={() => setShowNewModal(false)} onCreated={loadAssessments} />
-      )}
-    </motion.main>
-  );
+                {value}
+            </p>
+        </motion.div>
+    );
 }
 
-function StatCard({ label, value, danger = false }: { label: string; value: number; danger?: boolean }) {
-  return (
-    <div className="rounded-2xl bg-zinc-50/40 p-6 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
-      <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">{label}</p>
-      <p className={`mt-2 text-3xl font-bold ${danger ? 'text-red-600 dark:text-red-400' : 'text-zinc-900 dark:text-zinc-50'}`}>
-        {value}
-      </p>
-    </div>
-  );
-}
+function AssessmentCard({
+    assessment,
+    index,
+}: {
+    assessment: Assessment;
+    index: number;
+}) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+        >
+            <Link
+                href={`/assessment?id=${assessment.id}`}
+                className="block rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-blue-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-blue-700"
+            >
+                <div className="mb-4 flex items-start justify-between">
+                    <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                            {assessment.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            {assessment.organization}
+                        </p>
+                    </div>
+                    {assessment.overall_risk_level && (
+                        <RiskBadge level={assessment.overall_risk_level} size="sm" />
+                    )}
+                </div>
 
-function AssessmentCard({ assessment, index }: { assessment: Assessment; index: number }) {
-  const getRiskColor = (level?: string) => {
-    switch (level) {
-      case 'low': return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400';
-      case 'medium': return 'bg-amber-500/10 text-amber-700 dark:text-amber-400';
-      case 'high': return 'bg-orange-500/10 text-orange-700 dark:text-orange-400';
-      case 'critical': return 'bg-red-500/10 text-red-700 dark:text-red-400';
-      default: return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
-    }
-  };
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                    <span
+                        className={`rounded-full border px-2 py-1 text-xs font-medium ${getStatusColor(assessment.status)}`}
+                    >
+                        {formatStatus(assessment.status)}
+                    </span>
+                    {assessment.response_count !== undefined && (
+                        <span className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                            <FileText className="h-3 w-3" />
+                            {assessment.response_count} responses
+                        </span>
+                    )}
+                </div>
 
-  return (
-    <Link
-      href={`/assessment/${assessment.id}`}
-      className="relative block overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
-    >
-      <Spotlight
-        className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
-        size={64}
-      />
-      <div className="relative h-full w-full rounded-[15px] bg-white p-6 dark:bg-zinc-950">
-        <div className="mb-4 flex items-start justify-between">
-          <div className="flex-1">
-            <h4 className="font-medium text-zinc-900 dark:text-zinc-100">{assessment.title}</h4>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{assessment.organization}</p>
-          </div>
-          {assessment.overall_risk_level && (
-            <span className={`rounded-full px-3 py-1 text-xs font-medium ${getRiskColor(assessment.overall_risk_level)}`}>
-              {assessment.overall_risk_level}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-          <span className="flex items-center gap-1">
-            <FileText className="h-3 w-3" />
-            {assessment.response_count || 0} responses
-          </span>
-          <span className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            {new Date(assessment.created_at).toLocaleDateString()}
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
+                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                    <Calendar className="mr-1 h-3 w-3" />
+                    {formatDate(assessment.created_at)}
+                </div>
+            </Link>
+        </motion.div>
+    );
 }
 
 function EmptyState({ onCreateNew }: { onCreateNew: () => void }) {
-  return (
-    <div className="rounded-2xl border-2 border-dashed border-zinc-300 bg-zinc-50/40 p-12 text-center dark:border-zinc-700 dark:bg-zinc-950/40">
-      <FileText className="mx-auto mb-4 h-16 w-16 text-zinc-400" />
-      <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-        No assessments yet
-      </h3>
-      <p className="mb-6 text-zinc-600 dark:text-zinc-400">
-        Get started by creating your first DPIA assessment
-      </p>
-      <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>
-        <button
-          onClick={onCreateNew}
-          className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white p-12 dark:border-gray-700 dark:bg-gray-900"
         >
-          <Plus className="h-4 w-4" />
-          Create First Assessment
-        </button>
-      </Magnetic>
-    </div>
-  );
+            <FileText className="mb-4 h-16 w-16 text-gray-400" />
+            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
+                No assessments yet
+            </h3>
+            <p className="mb-6 text-center text-sm text-gray-600 dark:text-gray-400">
+                Get started by creating your first DPIA assessment
+            </p>
+            <button
+                onClick={onCreateNew}
+                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            >
+                <Plus className="h-4 w-4" />
+                Create First Assessment
+            </button>
+        </motion.div>
+    );
 }
 
-function NewAssessmentModal({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) {
-  const [formData, setFormData] = useState({ title: '', organization: '', description: '' });
-  const [loading, setLoading] = useState(false);
+function NewAssessmentModal({
+    onClose,
+    onCreated,
+}: {
+    onClose: () => void;
+    onCreated: () => void;
+}) {
+    const [formData, setFormData] = useState({
+        title: '',
+        organization: '',
+        description: '',
+    });
+    const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const response = await fetch(`${API_URL}/api/assessments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        onCreated();
-        onClose();
-      }
-    } catch (error) {
-      console.error('Failed to create assessment:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            await assessmentApi.create(formData);
+            onCreated();
+            onClose();
+        } catch (error) {
+            console.error('Failed to create assessment:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-xl dark:border-zinc-800 dark:bg-zinc-950"
-      >
-        <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          New Assessment
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Title *</label>
-            <input
-              type="text"
-              required
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Organization *</label>
-            <input
-              type="text"
-              required
-              value={formData.organization}
-              onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Description</label>
-            <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              rows={3}
-              className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-            />
-          </div>
-          <div className="flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg border border-zinc-300 px-4 py-2 font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-800 dark:bg-gray-900"
             >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white transition-colors hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-            >
-              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-              Create
-            </button>
-          </div>
-        </form>
-      </motion.div>
-    </div>
-  );
+                <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    New Assessment
+                </h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Title *
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            value={formData.title}
+                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Organization *
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            value={formData.organization}
+                            onChange={(e) =>
+                                setFormData({ ...formData, organization: e.target.value })
+                            }
+                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Description
+                        </label>
+                        <textarea
+                            value={formData.description}
+                            onChange={(e) =>
+                                setFormData({ ...formData, description: e.target.value })
+                            }
+                            rows={3}
+                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                        />
+                    </div>
+                    <div className="flex justify-end gap-2">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+                        >
+                            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </motion.div>
+        </div>
+    );
 }
-

@@ -4,7 +4,7 @@
  */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'motion/react';
 import {
@@ -23,9 +23,9 @@ import { MitigationList } from '@/components/MitigationList';
 import { ExportButtons } from '@/components/ExportButtons';
 import { formatDate, formatStatus, getStatusColor } from '@/utils/helpers';
 
-export default function ReportPage() {
-  const searchParams = useSearchParams();
-  const assessmentId = searchParams?.get('id');
+function ReportContent() {
+    const searchParams = useSearchParams();
+    const assessmentId = searchParams.get('id');
 
     const [assessment, setAssessment] = useState<Assessment | null>(null);
     const [riskSummary, setRiskSummary] = useState<RiskSummary | null>(null);
@@ -68,7 +68,7 @@ export default function ReportPage() {
                 <div className="text-center">
                     <p className="text-gray-600 dark:text-gray-400">Assessment not found</p>
                     <Link
-                        href="/"
+                        href="/assessments"
                         className="mt-4 inline-block text-blue-600 hover:underline dark:text-blue-400"
                     >
                         Return to Dashboard
@@ -89,7 +89,7 @@ export default function ReportPage() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <Link
-                                href="/"
+                                href="/assessments"
                                 className="rounded-lg p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
                             >
                                 <Home className="h-5 w-5" />
@@ -390,6 +390,18 @@ export default function ReportPage() {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function ReportPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex min-h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            </div>
+        }>
+            <ReportContent />
+        </Suspense>
     );
 }
 
