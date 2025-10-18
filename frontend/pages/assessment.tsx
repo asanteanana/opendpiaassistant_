@@ -16,9 +16,9 @@ import { RiskIndicator } from '@/components/RiskBadge';
 import { calculateProgress } from '@/utils/helpers';
 
 export default function AssessmentPage() {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const assessmentId = searchParams.get('id');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const assessmentId = searchParams?.get('id');
 
     const [assessment, setAssessment] = useState<Assessment | null>(null);
     const [categories, setCategories] = useState<QuestionCategory[]>([]);

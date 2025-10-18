@@ -24,8 +24,8 @@ import { ExportButtons } from '@/components/ExportButtons';
 import { formatDate, formatStatus, getStatusColor } from '@/utils/helpers';
 
 export default function ReportPage() {
-    const searchParams = useSearchParams();
-    const assessmentId = searchParams.get('id');
+  const searchParams = useSearchParams();
+  const assessmentId = searchParams?.get('id');
 
     const [assessment, setAssessment] = useState<Assessment | null>(null);
     const [riskSummary, setRiskSummary] = useState<RiskSummary | null>(null);
