@@ -82,7 +82,7 @@ export function Footer() {
               </TextLoop>
             </a>
           </div>
-          <div className="flex gap-2">
+          <div className="mt-2 flex gap-2">
             <Magnetic springOptions={{ bounce: 0 }} intensity={0.2}>
               <a href="https://gdpr.eu/" target="_blank" className="group relative inline-flex shrink-0 items-center gap-[1px] rounded-full bg-zinc-100 px-2.5 py-1 text-xs text-black transition-colors duration-200 hover:bg-zinc-950 hover:text-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700">
                 GDPR Guide
