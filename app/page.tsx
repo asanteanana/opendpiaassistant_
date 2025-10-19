@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { motion } from 'motion/react'
 import { XIcon } from 'lucide-react'
 import { Spotlight } from '@/components/ui/spotlight'
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/morphing-dialog'
 import Link from 'next/link'
 import { AnimatedBackground } from '@/components/ui/animated-background'
+import { OnboardingModal } from '@/components/OnboardingModal'
 import {
   PROJECTS,
   WORK_EXPERIENCE,
@@ -124,13 +126,25 @@ function MagneticSocialLink({
 }
 
 export default function Personal() {
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  const handleStartAssessment = () => {
+    setShowOnboarding(true);
+  };
+
+  const handleProceedToAssessment = () => {
+    setShowOnboarding(false);
+    window.location.href = '/assessments';
+  };
+
   return (
-    <motion.main
-      className="space-y-24"
-      variants={VARIANTS_CONTAINER}
-      initial="hidden"
-      animate="visible"
-    >
+    <>
+      <motion.main
+        className="space-y-24"
+        variants={VARIANTS_CONTAINER}
+        initial="hidden"
+        animate="visible"
+      >
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
@@ -145,8 +159,8 @@ export default function Personal() {
           </p>
           <div className="mt-6">
             <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>
-              <a
-                href="/assessments"
+              <button
+                onClick={handleStartAssessment}
                 className="group relative inline-flex shrink-0 items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
               >
                 Start DPIA Assessment
@@ -165,7 +179,7 @@ export default function Personal() {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-              </a>
+              </button>
             </Magnetic>
           </div>
         </div>
@@ -175,86 +189,78 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-lg font-medium">Features</h3>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <motion.div 
-            className="rounded-lg bg-zinc-50 p-6 dark:bg-zinc-900"
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2, ease: [0.215, 0.61, 0.355, 1] }}
-          >
-            <div className="mb-3 flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
-                <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">
+        <h3 className="mb-6 text-lg font-medium">Features</h3>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="flex items-center gap-3 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-900">
+            <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+              <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="font-medium text-zinc-900 dark:text-zinc-100">
                 Guided Questionnaire
               </h4>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                Step-by-step assessment process
+              </p>
             </div>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Step-by-step assessment process with categorized questions
-            </p>
-          </motion.div>
-          <motion.div 
-            className="rounded-lg bg-zinc-50 p-6 dark:bg-zinc-900"
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2, ease: [0.215, 0.61, 0.355, 1] }}
-          >
-            <div className="mb-3 flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
-                <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">
+          </div>
+          <div className="flex items-center gap-3 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-900">
+            <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+              <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="font-medium text-zinc-900 dark:text-zinc-100">
                 Real-time Risk Calculation
               </h4>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                Automatic risk scoring
+              </p>
             </div>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Automatic risk scoring based on responses
-            </p>
-          </motion.div>
-          <motion.div 
-            className="rounded-lg bg-zinc-50 p-6 dark:bg-zinc-900"
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2, ease: [0.215, 0.61, 0.355, 1] }}
-          >
-            <div className="mb-3 flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
-                <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">
+          </div>
+          <div className="flex items-center gap-3 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-900">
+            <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+              <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="font-medium text-zinc-900 dark:text-zinc-100">
                 Smart Recommendations
               </h4>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                GDPR-based mitigation suggestions
+              </p>
             </div>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Automatic mitigation suggestions based on GDPR
-            </p>
-          </motion.div>
-          <motion.div 
-            className="rounded-lg bg-zinc-50 p-6 dark:bg-zinc-900"
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2, ease: [0.215, 0.61, 0.355, 1] }}
-          >
-            <div className="mb-3 flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
-                <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">
+          </div>
+          <div className="flex items-center gap-3 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-900">
+            <div className="h-8 w-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+              <svg className="h-4 w-4 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="font-medium text-zinc-900 dark:text-zinc-100">
                 Export Reports
               </h4>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                PDF and JSON compliance reports
+              </p>
             </div>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Generate PDF and JSON reports for compliance
-            </p>
-          </motion.div>
+          </div>
         </div>
       </motion.section>
-    </motion.main>
+      </motion.main>
+
+      {/* Onboarding Modal */}
+      <OnboardingModal
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+        onStartAssessment={handleProceedToAssessment}
+      />
+    </>
   )
 }
