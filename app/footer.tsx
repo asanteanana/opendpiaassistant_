@@ -68,40 +68,29 @@ function ThemeSwitch() {
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-zinc-100 px-0 py-8 dark:border-zinc-800">
-      <div className="space-y-6">
-        {/* Main footer content */}
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-2">
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              © 2025 Nana Asante. Built with Motion-Primitives.
-            </p>
-            <p className="text-xs text-zinc-500 dark:text-zinc-500">
-              Open DPIA Assistant - Simplify GDPR compliance with intelligent assessments
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeSwitch />
+    <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <p className="text-xs text-zinc-500">
+            © 2025 Nana Asante. Built with Motion-Primitives.
+          </p>
+          <div className="flex gap-4 text-xs text-zinc-400">
+            <a href="/privacy" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              Privacy
+            </a>
+            <a href="/terms" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              Terms
+            </a>
+            <a href="/gdpr" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              GDPR
+            </a>
+            <a href="/security" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              Security
+            </a>
           </div>
         </div>
-
-        {/* Legal links */}
-        <div className="flex flex-wrap gap-6 text-xs text-zinc-500 dark:text-zinc-500">
-          <a href="/privacy" className="transition-colors hover:text-zinc-700 dark:hover:text-zinc-300">
-            Privacy Policy
-          </a>
-          <a href="/terms" className="transition-colors hover:text-zinc-700 dark:hover:text-zinc-300">
-            Terms of Service
-          </a>
-          <a href="/gdpr" className="transition-colors hover:text-zinc-700 dark:hover:text-zinc-300">
-            GDPR Compliance
-          </a>
-          <a href="/security" className="transition-colors hover:text-zinc-700 dark:hover:text-zinc-300">
-            Security
-          </a>
-          <a href="/support" className="transition-colors hover:text-zinc-700 dark:hover:text-zinc-300">
-            Support
-          </a>
+        <div className="text-xs text-zinc-400">
+          <ThemeSwitch />
         </div>
       </div>
     </footer>
