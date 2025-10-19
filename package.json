@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "setup:env": "cp .env.example .env.local"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
