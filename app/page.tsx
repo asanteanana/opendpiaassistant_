@@ -151,11 +151,11 @@ export default function Personal() {
       >
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">
-            Open DPIA Assistant
+            Simplify GDPR Compliance with Intelligent DPIAs
           </h1>
           <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-            Data Protection Impact Assessment tool. Conduct GDPR-compliant DPIAs 
-            with intelligent risk analysis and automated reporting.
+            Conduct Data Protection Impact Assessments with automated risk analysis, 
+            compliance validation, and exportable reports.
           </p>
           <div className="mt-6">
             <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>

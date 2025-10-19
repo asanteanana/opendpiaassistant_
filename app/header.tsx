@@ -6,18 +6,9 @@ export function Header() {
   return (
     <header className="mb-8 flex items-center justify-between">
       <div>
-        <Link href="/" className="font-medium text-black dark:text-white">
+        <Link href="/" className="text-lg font-semibold text-black dark:text-white">
           Open DPIA Assistant
         </Link>
-        <TextEffect
-          as="p"
-          preset="fade"
-          per="char"
-          className="text-zinc-600 dark:text-zinc-500"
-          delay={0.5}
-        >
-          Open DPIA Assistant
-        </TextEffect>
       </div>
       <nav className="flex items-center gap-6">
         <Link href="/assessments" className="text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
