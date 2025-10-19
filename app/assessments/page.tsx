@@ -12,6 +12,8 @@ import { assessmentApi } from '@/utils/api';
 import type { Assessment } from '@/utils/types';
 import { RiskBadge } from '@/components/RiskBadge';
 import { formatDate, formatStatus, getStatusColor } from '@/utils/helpers';
+import { SkeletonDashboard } from '@/components/ui/skeleton';
+import { useKeyboardShortcuts, KeyboardShortcutsHelp } from '@/hooks/useKeyboardShortcuts';
 
 export default function DashboardPage() {
     const [assessments, setAssessments] = useState<Assessment[]>([]);
@@ -20,6 +22,39 @@ export default function DashboardPage() {
     const [filterStatus, setFilterStatus] = useState<string>('');
     const [filterRisk, setFilterRisk] = useState<string>('');
     const [showNewModal, setShowNewModal] = useState(false);
+    const [showShortcuts, setShowShortcuts] = useState(false);
+
+    // Keyboard shortcuts
+    useKeyboardShortcuts({
+        shortcuts: [
+            {
+                key: 'n',
+                ctrlKey: true,
+                action: () => setShowNewModal(true),
+                description: 'New Assessment',
+            },
+        ],
+    });
+
+    // Listen for custom events
+    useEffect(() => {
+        const handleOpenNewAssessment = () => setShowNewModal(true);
+        const handleShowShortcuts = () => setShowShortcuts(true);
+        const handleCloseModal = () => {
+            setShowNewModal(false);
+            setShowShortcuts(false);
+        };
+
+        window.addEventListener('openNewAssessment', handleOpenNewAssessment);
+        window.addEventListener('showShortcuts', handleShowShortcuts);
+        window.addEventListener('closeModal', handleCloseModal);
+
+        return () => {
+            window.removeEventListener('openNewAssessment', handleOpenNewAssessment);
+            window.removeEventListener('showShortcuts', handleShowShortcuts);
+            window.removeEventListener('closeModal', handleCloseModal);
+        };
+    }, []);
 
     useEffect(() => {
         loadAssessments();
@@ -131,9 +166,7 @@ export default function DashboardPage() {
 
                 {/* Assessment Grid */}
                 {loading ? (
-                    <div className="flex h-64 items-center justify-center">
-                        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-                    </div>
+                    <SkeletonDashboard />
                 ) : filteredAssessments.length === 0 ? (
                     <EmptyState onCreateNew={() => setShowNewModal(true)} />
                 ) : (
@@ -152,6 +185,9 @@ export default function DashboardPage() {
                     onCreated={loadAssessments}
                 />
             )}
+
+            {/* Keyboard Shortcuts Help */}
+            {showShortcuts && <KeyboardShortcutsHelp />}
         </div>
     );
 }

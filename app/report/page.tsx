@@ -22,6 +22,8 @@ import { RiskBadge } from '@/components/RiskBadge';
 import { MitigationList } from '@/components/MitigationList';
 import { ExportButtons } from '@/components/ExportButtons';
 import { formatDate, formatStatus, getStatusColor } from '@/utils/helpers';
+import { SkeletonReport } from '@/components/ui/skeleton';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 function ReportContent() {
     const searchParams = useSearchParams();
@@ -30,6 +32,22 @@ function ReportContent() {
     const [assessment, setAssessment] = useState<Assessment | null>(null);
     const [riskSummary, setRiskSummary] = useState<RiskSummary | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // Keyboard shortcuts
+    useKeyboardShortcuts({
+        shortcuts: [
+            {
+                key: 'e',
+                ctrlKey: true,
+                action: () => {
+                    // Trigger export
+                    const event = new CustomEvent('exportAssessment');
+                    window.dispatchEvent(event);
+                },
+                description: 'Export Assessment',
+            },
+        ],
+    });
 
     useEffect(() => {
         if (assessmentId) {
@@ -56,8 +74,34 @@ function ReportContent() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+                {/* Header */}
+                <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <Link
+                                    href="/assessments"
+                                    className="rounded-lg p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+                                >
+                                    <Home className="h-5 w-5" />
+                                </Link>
+                                <div>
+                                    <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                                        DPIA Report
+                                    </h1>
+                                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        Loading...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                    <SkeletonReport />
+                </main>
             </div>
         );
     }

@@ -14,6 +14,8 @@ import type { Assessment, QuestionCategory, Response } from '@/utils/types';
 import { QuestionCard } from '@/components/QuestionCard';
 import { RiskIndicator } from '@/components/RiskBadge';
 import { calculateProgress } from '@/utils/helpers';
+import { SkeletonQuestionCard } from '@/components/ui/skeleton';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 function AssessmentContent() {
     const searchParams = useSearchParams();
@@ -28,6 +30,31 @@ function AssessmentContent() {
     const [responses, setResponses] = useState<Response[]>([]);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+
+    // Keyboard shortcuts
+    useKeyboardShortcuts({
+        shortcuts: [
+            {
+                key: 'ArrowRight',
+                action: () => canGoNext && handleNext(),
+                description: 'Next Question',
+            },
+            {
+                key: 'ArrowLeft',
+                action: () => canGoPrevious && handlePrevious(),
+                description: 'Previous Question',
+            },
+            {
+                key: 's',
+                ctrlKey: true,
+                action: () => {
+                    // Auto-save is already handled, but we can show feedback
+                    console.log('Manual save triggered');
+                },
+                description: 'Save Assessment',
+            },
+        ],
+    });
 
     useEffect(() => {
         if (assessmentId) {
@@ -208,7 +235,9 @@ function AssessmentContent() {
                         </motion.div>
 
                         {/* Question Card */}
-                        {currentQuestion && (
+                        {loading ? (
+                            <SkeletonQuestionCard />
+                        ) : currentQuestion ? (
                             <QuestionCard
                                 key={currentQuestion.id}
                                 question={currentQuestion}
@@ -216,7 +245,7 @@ function AssessmentContent() {
                                 onAnswer={handleAnswer}
                                 showRisk
                             />
-                        )}
+                        ) : null}
 
                         {/* Navigation */}
                         <div className="mt-6 flex items-center justify-between">

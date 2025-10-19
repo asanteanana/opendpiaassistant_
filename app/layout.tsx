@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   title: {
-    default: 'Nim - Personal website template',
-    template: '%s | Nim'
+    default: 'Open DPIA Assistant - Data Protection Impact Assessment Platform',
+    template: '%s | Open DPIA Assistant'
   },
-  description:  'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
+  description: 'Open DPIA Assistant is a comprehensive Data Protection Impact Assessment platform built with Next.js 15, React 19 and Motion-Primitives for GDPR compliance automation.',
 };
 
 const geist = Geist({
