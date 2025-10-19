@@ -148,7 +148,7 @@ export default function Personal() {
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
-        className="pt-16"
+        className="pt-8"
       >
         <div className="flex-1">
             <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">

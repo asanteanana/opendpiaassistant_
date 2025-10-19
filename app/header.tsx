@@ -20,10 +20,10 @@ export function Header() {
         </TextEffect>
       </div>
       <nav className="flex items-center gap-6">
-        <Link href="/assessments" className="text-lg font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+        <Link href="/assessments" className="text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
           Assessments
         </Link>
-        <Link href="/blog" className="text-lg font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+        <Link href="/blog" className="text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
           Resources
         </Link>
       </nav>
