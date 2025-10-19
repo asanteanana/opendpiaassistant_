@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Check, Info, Shield, Lock, Eye, Users, Clock, AlertCircle } from 'lucide-react';
-import type { AssessmentData } from '../../GuidedAssessmentFlow';
+import type { AssessmentData } from '../GuidedAssessmentFlow';
 
 interface SafeguardsControlsProps {
   data: AssessmentData;

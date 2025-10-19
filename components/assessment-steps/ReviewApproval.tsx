@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Check, MessageSquare, User, Mail, Calendar, AlertCircle } from 'lucide-react';
-import type { AssessmentData } from '../../GuidedAssessmentFlow';
+import type { AssessmentData } from '../GuidedAssessmentFlow';
 
 interface ReviewApprovalProps {
   data: AssessmentData;

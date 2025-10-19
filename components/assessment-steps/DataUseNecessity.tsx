@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Check, Info, Clock, Share2 } from 'lucide-react';
-import type { AssessmentData } from '../../GuidedAssessmentFlow';
+import type { AssessmentData } from '../GuidedAssessmentFlow';
 
 interface DataUseNecessityProps {
   data: AssessmentData;

@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle, Download, Share2, FileText, Copy, ExternalLink, Sparkles } from 'lucide-react';
-import type { AssessmentData } from '../../GuidedAssessmentFlow';
+import type { AssessmentData } from '../GuidedAssessmentFlow';
 
 interface GenerateReportProps {
   data: AssessmentData;
