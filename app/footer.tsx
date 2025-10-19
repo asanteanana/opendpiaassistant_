@@ -2,6 +2,7 @@
 import { AnimatedBackground } from '@/components/ui/animated-background'
 import { TextLoop } from '@/components/ui/text-loop'
 import { Magnetic } from '@/components/ui/magnetic'
+import { DateraLogoFooter } from '@/components/DateraLogo'
 import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
@@ -72,12 +73,15 @@ export function Footer() {
     <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
       <div className="flex items-center justify-between">
         <div className="space-y-4">
-          <a href="https://github.com/asanteanana/opendpiaassistant_" target="_blank">
-            <TextLoop className="text-xs text-zinc-500">
-              <span>© 2025 Nana Asante.</span>
-              <span>Built with Motion-Primitives.</span>
-            </TextLoop>
-          </a>
+          <div className="flex items-center gap-3">
+            <DateraLogoFooter />
+            <a href="https://github.com/asanteanana/opendpiaassistant_" target="_blank">
+              <TextLoop className="text-xs text-zinc-500">
+                <span>© 2025 Nana Asante.</span>
+                <span>Built with Motion-Primitives.</span>
+              </TextLoop>
+            </a>
+          </div>
           <div className="flex gap-2">
             <Magnetic springOptions={{ bounce: 0 }} intensity={0.2}>
               <a href="https://gdpr.eu/" target="_blank" className="group relative inline-flex shrink-0 items-center gap-[1px] rounded-full bg-zinc-100 px-2.5 py-1 text-xs text-black transition-colors duration-200 hover:bg-zinc-950 hover:text-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700">

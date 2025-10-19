@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle, Download, Share2, FileText, Copy, ExternalLink, Sparkles } from 'lucide-react';
 import type { AssessmentData } from '../GuidedAssessmentFlow';
+import { DateraLogoIcon } from '../DateraLogo';
 
 interface GenerateReportProps {
   data: AssessmentData;
@@ -277,7 +278,7 @@ export function GenerateReport({ data, onUpdate, onNext, onPrev }: GenerateRepor
       <div className="text-center py-6 border-t border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
           <span>Built with</span>
-          <span className="font-medium text-gray-700 dark:text-gray-300">DPIA Assistant</span>
+          <DateraLogoIcon size="sm" />
           <span>— modern compliance made simple</span>
         </div>
       </div>

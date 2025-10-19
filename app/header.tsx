@@ -1,5 +1,6 @@
 'use client'
 import { TextEffect } from '@/components/ui/text-effect'
+import { DateraLogoHeader } from '@/components/DateraLogo'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -9,8 +10,8 @@ export function Header() {
   return (
     <header className="mb-8 flex items-center justify-between">
       <div>
-        <Link href="/" className="text-sm font-medium text-black dark:text-white">
-          Datera
+        <Link href="/" className="block">
+          <DateraLogoHeader />
         </Link>
         <TextEffect
           as="p"
