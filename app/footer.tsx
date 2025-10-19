@@ -71,21 +71,24 @@ export function Footer() {
     <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <p className="text-xs text-zinc-500">
-            © 2025 Nana Asante. Built with Motion-Primitives.
-          </p>
+          <a href="https://github.com/asanteanana/opendpiaassistant_" target="_blank">
+            <TextLoop className="text-xs text-zinc-500">
+              <span>© 2025 Nana Asante.</span>
+              <span>Built with Motion-Primitives.</span>
+            </TextLoop>
+          </a>
           <div className="flex gap-4 text-xs text-zinc-400">
-            <a href="/privacy" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
-              Privacy
+            <a href="https://gdpr.eu/" target="_blank" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              GDPR Regulation
             </a>
-            <a href="/terms" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
-              Terms
+            <a href="https://www.privacy-regulation.eu/" target="_blank" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              Privacy Law
             </a>
-            <a href="/gdpr" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
-              GDPR
+            <a href="https://www.dataprotection.ie/" target="_blank" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              Data Protection
             </a>
-            <a href="/security" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
-              Security
+            <a href="https://ico.org.uk/" target="_blank" className="transition-colors hover:text-zinc-600 dark:hover:text-zinc-300">
+              ICO Guidelines
             </a>
           </div>
         </div>

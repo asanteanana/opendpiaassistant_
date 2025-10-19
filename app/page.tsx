@@ -152,7 +152,7 @@ export default function Personal() {
       >
         <div className="flex-1">
             <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">
-              Simplify GDPR Compliance with Intelligent DPIAs
+              Simplify Compliance with Intelligent DPIAs
             </h1>
             <p className="mt-4 text-zinc-600 dark:text-zinc-400">
               Conduct Data Protection Impact Assessments with automated risk analysis,
