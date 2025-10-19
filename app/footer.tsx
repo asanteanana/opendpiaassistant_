@@ -84,7 +84,7 @@ export function Footer() {
             <ThemeSwitch />
           </div>
         </div>
-        
+
         {/* Legal links */}
         <div className="flex flex-wrap gap-6 text-xs text-zinc-500 dark:text-zinc-500">
           <a href="/privacy" className="transition-colors hover:text-zinc-700 dark:hover:text-zinc-300">
