@@ -113,7 +113,7 @@ function ReportContent() {
                     <p className="text-gray-600 dark:text-gray-400">Assessment not found</p>
                     <Link
                         href="/assessments"
-                        className="mt-4 inline-block text-blue-600 hover:underline dark:text-blue-400"
+                        className="mt-4 inline-block text-green-600 hover:underline dark:text-green-400"
                     >
                         Return to Dashboard
                     </Link>
@@ -441,7 +441,7 @@ export default function ReportPage() {
     return (
         <Suspense fallback={
             <div className="flex min-h-screen items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                <Loader2 className="h-8 w-8 animate-spin text-green-600" />
             </div>
         }>
             <ReportContent />

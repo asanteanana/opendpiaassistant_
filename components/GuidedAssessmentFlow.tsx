@@ -207,7 +207,7 @@ export function GuidedAssessmentFlow({ assessmentId, onComplete }: GuidedAssessm
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
               <motion.div
-                className="bg-blue-600 h-2 rounded-full"
+                className="bg-green-600 h-2 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3 }}
@@ -294,7 +294,7 @@ export function GuidedAssessmentFlow({ assessmentId, onComplete }: GuidedAssessm
           {currentStep < STEPS.length - 1 ? (
             <button
               onClick={nextStep}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
             >
               Next
               <ChevronRight className="h-4 w-4" />

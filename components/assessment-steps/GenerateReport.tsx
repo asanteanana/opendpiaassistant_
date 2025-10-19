@@ -142,7 +142,7 @@ export function GenerateReport({ data, onUpdate, onNext, onPrev }: GenerateRepor
             <button
               onClick={generateReport}
               disabled={isGenerating}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isGenerating ? (
                 <div className="flex items-center gap-2">
@@ -160,10 +160,10 @@ export function GenerateReport({ data, onUpdate, onNext, onPrev }: GenerateRepor
         ) : (
           <div className="space-y-6">
             {/* Shareable Link */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+            <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Share2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <span className="font-medium text-blue-900 dark:text-blue-100">Shareable Link</span>
+                <Share2 className="h-4 w-4 text-green-600 dark:text-green-400" />
+                <span className="font-medium text-green-900 dark:text-green-100">Shareable Link</span>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -174,7 +174,7 @@ export function GenerateReport({ data, onUpdate, onNext, onPrev }: GenerateRepor
                 />
                 <button
                   onClick={copyShareableLink}
-                  className="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors"
+                  className="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition-colors"
                 >
                   {copied ? (
                     <div className="flex items-center gap-1">
@@ -203,7 +203,7 @@ export function GenerateReport({ data, onUpdate, onNext, onPrev }: GenerateRepor
                     <button
                       key={format.id}
                       onClick={() => downloadReport(format.id)}
-                      className={`p-4 rounded-lg border-2 border-${format.color}-200 bg-${format.color}-50 dark:bg-${format.color}-900/20 hover:border-${format.color}-300 dark:hover:border-${format.color}-500 transition-colors`}
+                    className={`p-4 rounded-lg border-2 border-${format.color}-200 bg-${format.color}-50 dark:bg-${format.color}-900/20 hover:border-${format.color}-300 dark:hover:border-${format.color}-500 transition-colors`}
                     >
                       <div className="flex items-center gap-3 mb-2">
                         <Icon className={`h-5 w-5 text-${format.color}-600 dark:text-${format.color}-400`} />

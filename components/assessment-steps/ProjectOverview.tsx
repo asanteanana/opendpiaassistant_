@@ -72,7 +72,7 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
           value={data.projectName}
           onChange={(e) => onUpdate({ projectName: e.target.value })}
           placeholder="e.g., Customer Analytics Dashboard"
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
         />
         <p className="text-sm text-gray-600 dark:text-gray-400">
           Give your DPIA a clear, descriptive name
@@ -89,7 +89,7 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
           onChange={(e) => onUpdate({ projectGoal: e.target.value })}
           placeholder="e.g., Analyze customer behavior to improve our product recommendations"
           rows={3}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
         />
         <p className="text-sm text-gray-600 dark:text-gray-400">
           What are you trying to achieve with this data processing?
@@ -109,12 +109,12 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
                 key={typeId}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-2 rounded-full text-sm dark:bg-blue-900 dark:text-blue-200"
+                className="flex items-center gap-2 bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm dark:bg-green-900 dark:text-green-200"
               >
                 <span>{option?.label}</span>
                 <button
                   onClick={() => handleDataTypeToggle(typeId)}
-                  className="hover:bg-blue-200 dark:hover:bg-blue-800 rounded-full p-1"
+                  className="hover:bg-green-200 dark:hover:bg-green-800 rounded-full p-1"
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -123,7 +123,7 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
           })}
           <button
             onClick={() => setShowDataTypes(!showDataTypes)}
-            className="flex items-center gap-2 border-2 border-dashed border-gray-300 text-gray-600 px-3 py-2 rounded-full text-sm hover:border-blue-500 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-blue-500 dark:hover:text-blue-400"
+            className="flex items-center gap-2 border-2 border-dashed border-gray-300 text-gray-600 px-3 py-2 rounded-full text-sm hover:border-green-600 hover:text-green-700 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-600 dark:hover:text-green-400"
           >
             <Plus className="h-4 w-4" />
             Add data type
@@ -142,7 +142,7 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
                 onClick={() => handleDataTypeToggle(option.id)}
                 className={`p-3 rounded-lg text-left transition-colors ${
                   data.dataTypes.includes(option.id)
-                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                     : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                 }`}
               >
@@ -213,8 +213,8 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
       </div>
 
       {/* Progress Checklist */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
-        <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-4">
+      <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
+        <h3 className="font-medium text-green-900 dark:text-green-100 mb-4">
           Project Overview Checklist
         </h3>
         <div className="space-y-2">
@@ -245,7 +245,7 @@ export function ProjectOverview({ data, onUpdate, onNext }: ProjectOverviewProps
         <button
           onClick={onNext}
           disabled={!isStepComplete}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Continue to Data Use
         </button>

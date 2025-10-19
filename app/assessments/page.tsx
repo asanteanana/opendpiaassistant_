@@ -108,7 +108,7 @@ export default function DashboardPage() {
                             onClick={() => setShowNewModal(true)}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
+                            className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-700"
                         >
                             <Plus className="h-4 w-4" />
                             New Assessment
@@ -136,14 +136,14 @@ export default function DashboardPage() {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search assessments..."
-                            className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                            className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-800"
                         />
                     </div>
                     <div className="flex gap-2">
                         <select
                             value={filterStatus}
                             onChange={(e) => setFilterStatus(e.target.value)}
-                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-800"
                         >
                             <option value="">All Status</option>
                             <option value="draft">Draft</option>
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                         <select
                             value={filterRisk}
                             onChange={(e) => setFilterRisk(e.target.value)}
-                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-800"
                         >
                             <option value="">All Risk Levels</option>
                             <option value="low">Low</option>
@@ -232,7 +232,7 @@ function AssessmentCard({
         >
             <Link
                 href={`/assessment?id=${assessment.id}`}
-                className="block rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-blue-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-blue-700"
+                className="block rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-green-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-green-700"
             >
                 <div className="mb-4 flex items-start justify-between">
                     <div className="flex-1">
@@ -287,7 +287,7 @@ function EmptyState({ onCreateNew }: { onCreateNew: () => void }) {
             </p>
             <button
                 onClick={onCreateNew}
-                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700"
             >
                 <Plus className="h-4 w-4" />
                 Create First Assessment
@@ -344,7 +344,7 @@ function NewAssessmentModal({
                             required
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-800"
                         />
                     </div>
                     <div>
@@ -358,7 +358,7 @@ function NewAssessmentModal({
                             onChange={(e) =>
                                 setFormData({ ...formData, organization: e.target.value })
                             }
-                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800"
+                            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-800"
                         />
                     </div>
                     <div>

@@ -56,14 +56,14 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
   return (
     <div className="space-y-8">
       {/* Introduction */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+      <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
         <div className="flex items-start gap-3">
-          <MessageSquare className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1" />
+          <MessageSquare className="h-6 w-6 text-green-600 dark:text-green-400 mt-1" />
           <div>
-            <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+            <h3 className="font-medium text-green-900 dark:text-green-100 mb-2">
               Get stakeholder input
             </h3>
-            <p className="text-sm text-blue-700 dark:text-blue-300">
+            <p className="text-sm text-green-700 dark:text-green-300">
               Add reviewer details and comments. This creates an audit trail for your DPIA.
             </p>
           </div>
@@ -89,7 +89,7 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
                 value={data.reviewerName}
                 onChange={(e) => onUpdate({ reviewerName: e.target.value })}
                 placeholder="Enter reviewer's name"
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
               />
             </div>
           </div>
@@ -102,7 +102,7 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
             <div className="relative">
               <button
                 onClick={() => setShowRoleOptions(!showRoleOptions)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-left text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-left text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
               >
                 {data.reviewerRole || 'Select reviewer role...'}
               </button>
@@ -158,7 +158,7 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
             onChange={(e) => onUpdate({ comments: e.target.value })}
             placeholder="Add any comments, concerns, or recommendations for this DPIA..."
             rows={6}
-            className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
           />
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -253,8 +253,8 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
       </div>
 
       {/* Progress Checklist */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
-        <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-4">
+      <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
+        <h3 className="font-medium text-green-900 dark:text-green-100 mb-4">
           Review & Approval Checklist
         </h3>
         <div className="space-y-2">
@@ -266,12 +266,12 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-3">
               <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                item.completed ? 'bg-blue-500 text-white' : 'bg-gray-300 dark:bg-gray-600'
+                item.completed ? 'bg-green-600 text-white' : 'bg-gray-300 dark:bg-gray-600'
               }`}>
                 {item.completed && <Check className="h-3 w-3" />}
               </div>
               <span className={`text-sm ${
-                item.completed ? 'text-blue-700 dark:text-blue-300' : 'text-gray-600 dark:text-gray-400'
+                item.completed ? 'text-green-700 dark:text-green-300' : 'text-gray-600 dark:text-gray-400'
               }`}>
                 {item.label}
               </span>
@@ -291,7 +291,7 @@ export function ReviewApproval({ data, onUpdate, onNext, onPrev }: ReviewApprova
         <button
           onClick={onNext}
           disabled={!isStepComplete}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Generate Report
         </button>

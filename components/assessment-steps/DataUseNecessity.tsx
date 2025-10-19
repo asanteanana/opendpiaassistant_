@@ -72,7 +72,7 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
         <div className="relative">
           <button
             onClick={() => setShowPurposeOptions(!showPurposeOptions)}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-left text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-left text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
           >
             {data.dataPurpose || 'Select a purpose...'}
           </button>
@@ -110,7 +110,7 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
         <div className="relative">
           <button
             onClick={() => setShowRetentionOptions(!showRetentionOptions)}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-left text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-left text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
           >
             {data.retentionPeriod || 'Select retention period...'}
           </button>
@@ -146,7 +146,7 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
               value={customRetentionPeriod}
               onChange={(e) => setCustomRetentionPeriod(e.target.value)}
               placeholder="e.g., 2 years, 18 months, until account closure"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
             />
           </motion.div>
         )}
@@ -167,8 +167,8 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
             onClick={() => onUpdate({ dataSharing: true })}
             className={`flex-1 px-4 py-3 rounded-lg border-2 text-center font-medium transition-colors ${
               data.dataSharing
-                ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300'
-                : 'border-gray-300 text-gray-700 hover:border-blue-300 dark:border-gray-600 dark:text-gray-300 dark:hover:border-blue-500'
+                ? 'border-green-600 bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300'
+                : 'border-gray-300 text-gray-700 hover:border-green-600 dark:border-gray-600 dark:text-gray-300 dark:hover:border-green-600'
             }`}
           >
             Yes
@@ -177,8 +177,8 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
             onClick={() => onUpdate({ dataSharing: false })}
             className={`flex-1 px-4 py-3 rounded-lg border-2 text-center font-medium transition-colors ${
               !data.dataSharing
-                ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300'
-                : 'border-gray-300 text-gray-700 hover:border-blue-300 dark:border-gray-600 dark:text-gray-300 dark:hover:border-blue-500'
+                ? 'border-green-600 bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300'
+                : 'border-gray-300 text-gray-700 hover:border-green-600 dark:border-gray-600 dark:text-gray-300 dark:hover:border-green-600'
             }`}
           >
             No
@@ -196,7 +196,7 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
               onChange={(e) => onUpdate({ sharingDetails: e.target.value })}
               placeholder="Describe who you share with and why (e.g., payment processors, analytics providers, cloud storage)"
               rows={3}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
             />
           </motion.div>
         )}
@@ -246,7 +246,7 @@ export function DataUseNecessity({ data, onUpdate, onNext, onPrev }: DataUseNece
         <button
           onClick={onNext}
           disabled={!isStepComplete}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Continue to Risk Review
         </button>

@@ -123,14 +123,14 @@ export function SafeguardsControls({ data, onUpdate, onNext, onPrev }: Safeguard
   return (
     <div className="space-y-8">
       {/* Introduction */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+      <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
         <div className="flex items-start gap-3">
-          <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1" />
+          <Shield className="h-6 w-6 text-green-600 dark:text-green-400 mt-1" />
           <div>
-            <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+            <h3 className="font-medium text-green-900 dark:text-green-100 mb-2">
               How will you protect the data?
             </h3>
-            <p className="text-sm text-blue-700 dark:text-blue-300">
+            <p className="text-sm text-green-700 dark:text-green-300">
               Select the safeguards you have in place or plan to implement. These help reduce the risks we identified.
             </p>
           </div>
@@ -189,7 +189,7 @@ export function SafeguardsControls({ data, onUpdate, onNext, onPrev }: Safeguard
                           <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">
                             {safeguard.description}
                           </div>
-                          <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
+                          <div className="flex items-center gap-1 text-xs text-green-700 dark:text-green-400">
                             <Info className="h-3 w-3" />
                             <span>Hover for example</span>
                           </div>
@@ -313,7 +313,7 @@ export function SafeguardsControls({ data, onUpdate, onNext, onPrev }: Safeguard
         <button
           onClick={onNext}
           disabled={!isStepComplete}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Continue to Review
         </button>

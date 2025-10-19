@@ -109,8 +109,8 @@ export function RiskReview({ data, onUpdate, onNext, onPrev }: RiskReviewProps) 
               onClick={() => handleLikelihoodSelect(option.value)}
               className={`p-4 rounded-lg border-2 text-center transition-all ${
                 selectedLikelihood === option.value
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-300 hover:border-blue-300 dark:border-gray-600 dark:hover:border-blue-500'
+                  ? 'border-green-600 bg-green-50 dark:bg-green-900/20'
+                  : 'border-gray-300 hover:border-green-600 dark:border-gray-600 dark:hover:border-green-600'
               }`}
             >
               <div className="text-2xl mb-2">{option.emoji}</div>
@@ -133,8 +133,8 @@ export function RiskReview({ data, onUpdate, onNext, onPrev }: RiskReviewProps) 
               onClick={() => handleImpactSelect(option.value)}
               className={`p-4 rounded-lg border-2 text-center transition-all ${
                 selectedImpact === option.value
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-300 hover:border-blue-300 dark:border-gray-600 dark:hover:border-blue-500'
+                  ? 'border-green-600 bg-green-50 dark:bg-green-900/20'
+                  : 'border-gray-300 hover:border-green-600 dark:border-gray-600 dark:hover:border-green-600'
               }`}
             >
               <div className="text-2xl mb-2">{option.emoji}</div>
@@ -204,7 +204,7 @@ export function RiskReview({ data, onUpdate, onNext, onPrev }: RiskReviewProps) 
                     key={`${likelihood}-${impact}`}
                     className={`h-8 rounded flex items-center justify-center text-xs font-medium ${
                       isSelected
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-green-600 text-white'
                         : score <= 4
                         ? 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
                         : score <= 12
